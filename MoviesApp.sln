@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33815.320
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoviesApp", "MoviesApp.csproj", "{1B0BD35F-0413-4D26-9110-940E56C99281}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Movies.EF", "..\Movies.EF\Movies.EF.csproj", "{FEDD378E-ADD5-4DFF-AA71-002E4ADA5B69}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Movies.Domain", "..\Movies.Domain\Movies.Domain.csproj", "{32BF808C-D902-4A18-AD86-059432EB4825}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1B0BD35F-0413-4D26-9110-940E56C99281}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B0BD35F-0413-4D26-9110-940E56C99281}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B0BD35F-0413-4D26-9110-940E56C99281}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B0BD35F-0413-4D26-9110-940E56C99281}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FEDD378E-ADD5-4DFF-AA71-002E4ADA5B69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FEDD378E-ADD5-4DFF-AA71-002E4ADA5B69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FEDD378E-ADD5-4DFF-AA71-002E4ADA5B69}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FEDD378E-ADD5-4DFF-AA71-002E4ADA5B69}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32BF808C-D902-4A18-AD86-059432EB4825}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32BF808C-D902-4A18-AD86-059432EB4825}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32BF808C-D902-4A18-AD86-059432EB4825}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32BF808C-D902-4A18-AD86-059432EB4825}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2FE80269-1223-48EA-AC9C-970F7D1033D9}
+	EndGlobalSection
+EndGlobal
