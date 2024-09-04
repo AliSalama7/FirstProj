@@ -3,11 +3,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Movies.Domain.Constants;
-using Movies.Domain.Interfaces;
-using Movies.Domain.Models;
 using MoviesApp.Models;
 using MoviesApp.Models.IdentityViewModels;
-using NuGet.Versioning;
 using System.Data;
 using System.Security.Claims;
 
@@ -40,16 +37,16 @@ namespace MoviesApp.Controllers
             await _roleManager.CreateAsync(new IdentityRole(model.Name.Trim()));
             return RedirectToAction(nameof(Index));
         }
-        public async Task <IActionResult> ManagePermissions(string roleid)
+        public async Task<IActionResult> ManagePermissions(string roleid)
         {
             var role = await _roleManager.FindByIdAsync(roleid);
             if (role == null)
                 return NotFound();
             var permissions = _roleManager.GetClaimsAsync(role).Result.Select(r => r.Value).ToList();
             var allPermissions = Permissions.GenerateAllPermissions().Select(m => new CheckBoxViewModel { Name = m }).ToList();
-            foreach(var permission in allPermissions)
+            foreach (var permission in allPermissions)
             {
-                if(permissions.Any(c => c == permission.Name))
+                if (permissions.Any(c => c == permission.Name))
                     permission.IsChecked = true;
             }
             var viewModel = new GenericOne2ManyviewModel

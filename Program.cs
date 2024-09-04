@@ -1,4 +1,4 @@
-    using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Movies.Domain.Interfaces;
 using Movies.EF.Repositories;
 using NToastNotify;
@@ -9,7 +9,6 @@ using MoviesApp.Services;
 using Movies.EF.Data;
 using Microsoft.AspNetCore.Authorization;
 using Movies.EF.Filters;
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.Configure<IISServerOptions>(options =>
@@ -17,8 +16,6 @@ builder.Services.Configure<IISServerOptions>(options =>
     options.MaxRequestBodySize = int.MaxValue;
 });
 //Add services to the container.
-builder.Services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
-builder.Services.AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>();
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<MoviesDbContext>(options => 
 options.UseSqlServer(builder.Configuration.GetConnectionString("MyConnection"),
@@ -33,7 +30,8 @@ builder.Services.Configure<SecurityStampValidatorOptions>(options =>
 {
     options.ValidationInterval = TimeSpan.Zero;
 });
-
+builder.Services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
+builder.Services.AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>();
 builder.Services.AddTransient(typeof(IGenericRepository<> ), typeof(GenericRepository<>));
 builder.Services.AddScoped<RoleManager<IdentityRole>>();
 builder.Services.AddTransient<IEmailSender, EmailSender>();
