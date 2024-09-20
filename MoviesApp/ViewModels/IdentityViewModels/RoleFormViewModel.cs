@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-
 namespace MoviesApp.Models.IdentityViewModels
 {
     public class RoleFormViewModel

@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Options;
-
 namespace Movies.EF.Filters
 {
     public class PermissionPolicyProvider : IAuthorizationPolicyProvider
@@ -18,8 +17,9 @@ namespace Movies.EF.Filters
 
         public Task<AuthorizationPolicy?> GetFallbackPolicyAsync()
         {
-            return FallbackPolicyProvider.GetDefaultPolicyAsync();
+            return Task.FromResult<AuthorizationPolicy?>(null);  // Return null if no fallback policy is required
         }
+
 
         public Task<AuthorizationPolicy?> GetPolicyAsync(string policyName)
         {

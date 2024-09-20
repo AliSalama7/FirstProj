@@ -2,13 +2,10 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Movies.Domain.Interfaces;
 using Movies.Domain.Models;
 using MoviesApp.Models;
 using MoviesApp.Models.IdentityViewModels;
 using System.Data;
-
-
 namespace MoviesApp.Controllers
 {
     [Authorize(Roles = "Moderator")]

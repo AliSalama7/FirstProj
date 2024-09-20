@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Movies.Domain.Interfaces;
 using Movies.Domain.Models;
-
 namespace MoviesApp.Controllers.Api
 {
     [Route("api/[controller]")]

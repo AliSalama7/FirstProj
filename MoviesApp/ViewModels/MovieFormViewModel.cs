@@ -1,7 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
-using Movies.Domain.Models;
+﻿using Movies.Domain.Models;
 using System.ComponentModel.DataAnnotations;
-
 namespace MoviesApp.Models
 {
     public class MovieFormViewModel

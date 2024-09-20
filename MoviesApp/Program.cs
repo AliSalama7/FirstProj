@@ -30,10 +30,11 @@ builder.Services.Configure<SecurityStampValidatorOptions>(options =>
 {
     options.ValidationInterval = TimeSpan.Zero;
 });
+builder.Services.AddTransient(typeof(IGenericRepository<> ), typeof(GenericRepository<>));
+builder.Services.AddTransient<IMoviesRepository,MoviesRepository>(); 
+builder.Services.AddScoped<RoleManager<IdentityRole>>();
 builder.Services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
 builder.Services.AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>();
-builder.Services.AddTransient(typeof(IGenericRepository<> ), typeof(GenericRepository<>));
-builder.Services.AddScoped<RoleManager<IdentityRole>>();
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 builder.Services.AddMvc().AddNToastNotifyToastr(new NToastNotify.ToastrOptions()
 {
@@ -88,7 +89,8 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-app.UseAuthentication();;
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

@@ -7,7 +7,6 @@ using MoviesApp.Models;
 using MoviesApp.Models.IdentityViewModels;
 using System.Data;
 using System.Security.Claims;
-
 namespace MoviesApp.Controllers
 {
     [Authorize(Roles = "Moderator")]
@@ -18,13 +17,11 @@ namespace MoviesApp.Controllers
         {
             _roleManager = roleManager;
         }
-    
         public async Task<IActionResult> Index()
         {
             var roles = await    _roleManager.Roles.ToListAsync();
             return View(roles);
         }
-
         public async Task<IActionResult> Add(RoleFormViewModel model)
         {
             if (!ModelState.IsValid)

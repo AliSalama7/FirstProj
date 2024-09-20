@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.UI.Services;
 using System.Net;
 using System.Net.Mail;
-
 namespace MoviesApp.Services
 {
     public class EmailSender : IEmailSender

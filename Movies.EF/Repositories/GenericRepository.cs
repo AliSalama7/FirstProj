@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Movies.Domain.Interfaces;
-using Movies.Domain.Models;
 using Movies.EF.Data;
 using System.Linq.Expressions;
 namespace Movies.EF.Repositories
@@ -17,7 +16,6 @@ namespace Movies.EF.Repositories
         public void Add(T entity)
         {
             _context.Add(entity);
-            _context.SaveChanges();
         }
 
         public async Task<IEnumerable<T>> GetAllAsync()
@@ -38,7 +36,7 @@ namespace Movies.EF.Repositories
             return await _context.Set<T>().OrderByDescending(orderBy).ToListAsync();
         }
 
-        public void Update()
+        public void Save()
         {
             _context.SaveChanges();
         }
@@ -55,19 +53,7 @@ namespace Movies.EF.Repositories
         public void Delete(T entity)
         {
             _context.Remove(entity);
-            _context.SaveChanges();
         }
-        //Movie
-        public async Task<IEnumerable<T>> GetAllAsyncDec1()
-        {
-            return (IEnumerable<T>)await _context.Movies.Include(m => m.MovieGenres).ThenInclude(m => m.Genre).ToListAsync();
-        }
-
-        public async Task<MovieGenre> GetMovieGenreAsync(int movieId, int genreId)
-        {
-            return await _context.MovieGenres.FirstOrDefaultAsync(mg => mg.MovieId == movieId && mg.GenreId == genreId);
-        }
-
     }
 }
 

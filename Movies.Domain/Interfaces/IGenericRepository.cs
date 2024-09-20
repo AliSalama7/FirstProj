@@ -11,10 +11,6 @@ namespace Movies.Domain.Interfaces
         void Delete(T entity);
         Task<T> Find(Expression<Func<T, bool>> match, string[] Includes);
         void Add(T entity);
-        void Update();
-
-        //IMoviesRepository
-        Task<IEnumerable<T>> GetAllAsyncDec1();
-        Task<MovieGenre> GetMovieGenreAsync(int movieId, int genreId);
+        void Save();
     }
 }

@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-
 namespace Movies.EF.Filters
 {
     public class PermissionRequirement : IAuthorizationRequirement

@@ -1,9 +1,8 @@
-﻿    using Microsoft.AspNetCore.Mvc;
-    using Movies.Domain.Interfaces;
-    using Movies.Domain.Models;
-    using MoviesApp.Models;
-    using NToastNotify;
-
+﻿using Microsoft.AspNetCore.Mvc;
+using Movies.Domain.Interfaces;
+using Movies.Domain.Models;
+using MoviesApp.Models;
+using NToastNotify;
 namespace MoviesApp.Controllers
 {
     public class MoviesController : Controller
@@ -12,13 +11,14 @@ namespace MoviesApp.Controllers
         private long _maxAllowedPosterSize = 1048576;
         private readonly IToastNotification _toastnotification;
         public IGenericRepository<Movie> _moviesRepository { get; set; }
+        public IMoviesRepository moviesRepository { get; set; }
         public IGenericRepository<Genre> _genresRepository { get; set; }
-
-        public MoviesController(IGenericRepository<Movie> MoviesRepository, IGenericRepository<Genre> GenresRepository, IToastNotification toastnotification)
+        public MoviesController(IGenericRepository<Movie> MoviesRepository,IMoviesRepository moviesRepository, IGenericRepository<Genre> GenresRepository, IToastNotification toastnotification)
         {
             _moviesRepository = MoviesRepository;
             _genresRepository = GenresRepository;
             _toastnotification = toastnotification;
+            this.moviesRepository = moviesRepository;
         }
         public async Task<IActionResult> Index()
         {
@@ -31,7 +31,6 @@ namespace MoviesApp.Controllers
             {
                 Genres = await _genresRepository.GetAllAsync(m => m.Name)
             };
-         
             return View("MovieForm", ViewModel);
         }
         [HttpPost]
@@ -82,6 +81,7 @@ namespace MoviesApp.Controllers
                 MovieGenres = model.GenresId.Select(genreid => new MovieGenre { GenreId = genreid}).ToList()
             };
             _moviesRepository.Add(movies);
+            _moviesRepository.Save();
             _toastnotification.AddSuccessToastMessage("Movie Created Successfully");
             return RedirectToAction(nameof(Index));
         }
@@ -147,16 +147,15 @@ namespace MoviesApp.Controllers
                 }
                 movie.Poster = model.Poster;
             }
-
-            movie.Title = model.Title;
-            movie.Year = model.Year;
-            movie.Rate = model.Rate;
-            movie.Storeline = model.Storeline;
-            movie.Director = model.Director;
-            if (model.GenresId != null) { 
+                movie.Title = model.Title;
+                movie.Year = model.Year;
+                movie.Rate = model.Rate;
+                movie.Storeline = model.Storeline;
+                movie.Director = model.Director;
+                if (model.GenresId != null) { 
                 foreach (var genreId in model.GenresId)
                 {
-                    var existingMovieGenre = await _moviesRepository.GetMovieGenreAsync(movie.Id, genreId);
+                    var existingMovieGenre = await moviesRepository.GetMovieGenreAsync(movie.Id, genreId);
                     if (existingMovieGenre != null)
                     {
                         movie.MovieGenres.Add(existingMovieGenre);
@@ -168,7 +167,7 @@ namespace MoviesApp.Controllers
                 } 
         }
 
-            _moviesRepository.Update();
+            _moviesRepository.Save();
             _toastnotification.AddSuccessToastMessage("Movie Updated Successfully");
             return RedirectToAction(nameof(Index));
         }
@@ -195,6 +194,7 @@ namespace MoviesApp.Controllers
                 return NotFound();
 
             _moviesRepository.Delete(movie);
+            _moviesRepository.Save();
             return Ok();
         }
     }

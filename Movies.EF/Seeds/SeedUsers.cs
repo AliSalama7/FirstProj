@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Movies.Domain.Constants;
 using Movies.Domain.Models;
+using System.Security.Claims;
 namespace Movies.EF.Seeds
 {
     public static class SeedUsers
@@ -38,23 +39,23 @@ namespace Movies.EF.Seeds
                 await userManager.CreateAsync(User, "123Ali");
                 await userManager.AddToRoleAsync(User, Roles.Moderator.ToString());
             };
-            //await roleManager.SeedClaimsForModerator();
+            await roleManager.SeedClaimsForModerator();
         }
 
-        //private static async Task SeedClaimsForModerator(this RoleManager<IdentityRole> roleManager)
-        //{
-        //    var ModRole = await roleManager.FindByNameAsync(Roles.Moderator.ToString());
-        //    await roleManager.AddPermissionClaims(ModRole, "Movies");
-        //}
-        //public static async Task AddPermissionClaims(this RoleManager<IdentityRole> roleManager, IdentityRole role, string module)
-        //{
-        //    var allclaims = await roleManager.GetClaimsAsync(role);
-        //    var allPermissions = Permissions.GeneratePermissionList(module);
-        //    foreach (var permission in allPermissions)
-        //    {
-        //        if (!allclaims.Any(m => m.Type == "Permission" && m.Value == permission))
-        //            await roleManager.AddClaimAsync(role, new Claim("Permission", permission));
-        //    }
-        //}
+        private static async Task SeedClaimsForModerator(this RoleManager<IdentityRole> roleManager)
+        {
+            var ModRole = await roleManager.FindByNameAsync(Roles.Moderator.ToString());
+            await roleManager.AddPermissionClaims(ModRole, "Movies");
+        }
+        public static async Task AddPermissionClaims(this RoleManager<IdentityRole> roleManager, IdentityRole role, string module)
+        {
+            var allclaims = await roleManager.GetClaimsAsync(role);
+            var allPermissions = Permissions.GeneratePermissionList(module);
+            foreach (var permission in allPermissions)
+            {
+                if (!allclaims.Any(m => m.Type == "Permission" && m.Value == permission))
+                    await roleManager.AddClaimAsync(role, new Claim("Permission", permission));
+            }
+        }
     }
 }

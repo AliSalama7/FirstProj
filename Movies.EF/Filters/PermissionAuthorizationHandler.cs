@@ -1,27 +1,26 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-
 namespace Movies.EF.Filters
 {
     public class PermissionAuthorizationHandler : AuthorizationHandler<PermissionRequirement>
     {
         public PermissionAuthorizationHandler()
         {
-
         }
-
-        protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, PermissionRequirement requirement)
+        protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, PermissionRequirement requirement)
         {
             if (context.User == null)
-                return;
+                return Task.CompletedTask;
 
-            var canAccess = context.User.Claims.Any(c => c.Type == "Permission" && c.Value == requirement.Permission && c.Issuer == "LOCAL AUTHORITY");
-            if (canAccess)
-            {
+            var hasPermission = context.User.Claims.Any(c =>
+                c.Type == "Permission" &&
+                c.Value == requirement.Permission &&
+                c.Issuer == "LOCAL AUTHORITY");
+
+            if (hasPermission)
                 context.Succeed(requirement);
-                return;
-            }
 
-
+            return Task.CompletedTask;
         }
+
     }
 }
